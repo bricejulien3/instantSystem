@@ -27,6 +27,7 @@ public class ParkingService {
 
             String parkingAvailabilityJson = getJsonResponse(PARKING_AVAILABILITY_URL);
             updateParkingAvailability(parkingList, parkingAvailabilityJson);
+            // showOnlyNearbyParkings(parkingList);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,15 +58,10 @@ public class ParkingService {
                     // Calcul de la distance entre les coordonnées actuelles et celles du parking
                     double distance = calculateDistance(userLatitude, userLongitude, parkingLatitude, parkingLongitude);
 
-                    // retourne uniquement les parkings à proximité (400m max)
-                    if (distance > MAX_DISTANCE) {
-                        continue;
-                    }
-
                     String parkingName = getTextValue(fieldsNode, "nom_du_par");
                     String id = getTextValue(fieldsNode, "id");
                     int availableSpaces = getIntValue(fieldsNode, "nb_places");
-                    Parking parking = new Parking(id, parkingName, availableSpaces, distance);
+                    Parking parking = new Parking(id, parkingName, availableSpaces, availableSpaces, distance);
                     parkingList.add(parking);
                 }
             }
@@ -136,5 +132,9 @@ public class ParkingService {
         double distance = 6371 * c * 1000; // Conversion en mètres
 
         return distance;
+    }
+
+    private void showOnlyNearbyParkings(List<Parking> parkingList) {
+        parkingList.removeIf(p -> p.getDistanceToUser() > MAX_DISTANCE);
     }
 }

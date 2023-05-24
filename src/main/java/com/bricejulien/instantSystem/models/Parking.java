@@ -13,10 +13,11 @@ public class Parking {
     private double distanceToUser; // distance en mètres
 
     // Constructeur avec paramètres
-    public Parking(String id, String name, int availableSpaces, double distanceToUser) {
+    public Parking(String id, String name, int availableSpaces, int capacity, double distanceToUser) {
         this.id = id;
         this.name = name;
         this.availableSpaces = availableSpaces;
+        this.capacity = capacity;
         this.distanceToUser = distanceToUser;
     }
 
