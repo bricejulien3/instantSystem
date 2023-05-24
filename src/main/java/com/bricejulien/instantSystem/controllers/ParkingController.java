@@ -17,8 +17,12 @@ public class ParkingController {
         this.parkingService = parkingService;
     }
 
-    @GetMapping
-    public List<Parking> getAllParkings() {
-        return parkingService.getParkings();
+    @GetMapping("/nearby")
+    public List<Parking> getParkingsNearby(@RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude) {
+        // Appel de votre service ParkingService pour obtenir les parkings à proximité
+        List<Parking> nearbyParkings = parkingService.getParkings(latitude, longitude);
+
+        return nearbyParkings;
     }
 }

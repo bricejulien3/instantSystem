@@ -8,15 +8,16 @@ public class Parking {
 
     private String id;
     private String name;
-    private String tariffZone;
+    private int capacity;
     private int availableSpaces;
+    private double distanceToUser; // distance en mètres
 
     // Constructeur avec paramètres
-    public Parking(String id, String name, String tariffZone, int availableSpaces) {
+    public Parking(String id, String name, int availableSpaces, double distanceToUser) {
         this.id = id;
         this.name = name;
-        this.tariffZone = tariffZone;
         this.availableSpaces = availableSpaces;
+        this.distanceToUser = distanceToUser;
     }
 
     // Getters et setters
@@ -37,12 +38,12 @@ public class Parking {
         this.name = name;
     }
 
-    public String getTariffZone() {
-        return tariffZone;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTariffZone(String tariffZone) {
-        this.tariffZone = tariffZone;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public int getAvailableSpaces() {
@@ -51,5 +52,13 @@ public class Parking {
 
     public void setAvailableSpaces(int availableSpaces) {
         this.availableSpaces = availableSpaces;
+    }
+
+    public double getDistanceToUser() {
+        return distanceToUser;
+    }
+
+    public void setDistanceToUser(double distanceToUser) {
+        this.distanceToUser = distanceToUser;
     }
 }
