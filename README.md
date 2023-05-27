@@ -9,6 +9,23 @@ Le service offre les fonctionnalités suivantes :
 
 - Récupérer les parkings à proximité : En utilisant les coordonnées de latitude et de longitude de l'utilisateur, le service appelle un service externe pour obtenir les données des parkings disponibles. Les données sont ensuite filtrées pour ne conserver que les parkings à une distance maximale prédéfinie de l'utilisateur.
 
+## Choix technologiques
+
+Les choix technologiques pour ce projet sont les suivants :
+
+- **Spring Boot** : Nous avons choisi Spring Boot pour le développement de ce service en raison de sa simplicité de configuration et de déploiement, ainsi que de son intégration étroite avec le framework Spring, ce qui facilite la création d'une API REST.
+- **RestTemplate** : Nous utilisons RestTemplate, fourni par Spring, pour effectuer des requêtes HTTP vers les services externes et récupérer les données des parkings. Cela nous permet de consommer facilement les API REST et de manipuler les réponses JSON.
+- **Jackson** : Jackson est une bibliothèque Java pour la manipulation des données JSON. Nous l'utilisons ici pour la désérialisation des réponses JSON des services externes en objets Java (parkings).
+- **Spring Framework** : Nous utilisons également d'autres composants du Spring Framework pour faciliter le développement de l'application, notamment l'injection de dépendances via les constructeurs.
+
+## Problèmes identifiés
+
+Bien que ce service permette de récupérer les parkings à proximité de l'utilisateur, il convient de noter certains problèmes qui n'ont pas été traités dans cette implémentation :
+
+- **Authentification et sécurité** : Ce service n'inclut pas de mécanismes d'authentification ou de sécurité. Pour une utilisation en production, il serait important d'implémenter des mesures de sécurité appropriées, telles que l'authentification des utilisateurs, la validation des requêtes, etc.
+- **Gestion des erreurs** : Bien que certaines exceptions soient gérées dans le code, une gestion plus robuste des erreurs pourrait être mise en place pour fournir des réponses plus précises et des messages d'erreur significatifs en cas de problèmes.
+- **Optimisation des performances** : Si le nombre de parkings ou d'utilisateurs augmente considérablement, des améliorations pourraient être apportées pour optimiser les performances, telles que la mise en cache des données ou l'utilisation de requêtes asynchrones.
+
 ## Utilisation
 
 Le service est accessible via une requête HTTP GET à l'URL suivante :
