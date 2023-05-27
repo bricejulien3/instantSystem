@@ -10,7 +10,8 @@ public class Parking {
     private String name;
     private int capacity;
     private int availableSpaces;
-    private double distanceToUser; // distance en mètres
+    // distance en mètres entre l'utilisateur et le parking
+    private double distanceToUser;
 
     // Constructeur avec paramètres
     public Parking(String id, String name, int availableSpaces, int capacity, double distanceToUser) {

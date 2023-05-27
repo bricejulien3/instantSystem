@@ -17,10 +17,16 @@ public class ParkingController {
         this.parkingService = parkingService;
     }
 
+    // exemple de requete:
+    // http://localhost:8080/parkings/nearby?latitude=46.58922605070947&longitude=0.342201120082188
     @GetMapping("/nearby")
     public List<Parking> getParkingsNearby(@RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude) {
-        // Appel de votre service ParkingService pour obtenir les parkings à proximité
+        // Utilisation des coordonnées de latitude et longitude passées en paramètres
+        // pour récupérer les parkings à proximité du point spécifié
+        // et afficher le nombre de places dispo et leur distance depuis la position de
+        // l'utilisateur
+        // coordonnées géo: permet la réutilisation dans n'importe quelle ville.
         List<Parking> nearbyParkings = parkingService.getParkings(latitude, longitude);
 
         return nearbyParkings;

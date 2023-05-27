@@ -35,11 +35,13 @@ public class ParkingService {
         return parkingList;
     }
 
+    // Effectue une requête HTTP GET et obtient une réponse JSON
     private String getJsonResponse(String url) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);
     }
 
+    // Récupère la liste des parkings et quelques attributs (position notamment)
     private List<Parking> parseParkingData(String jsonData, double userLatitude, double userLongitude)
             throws IOException {
         List<Parking> parkingList = new ArrayList<>();
@@ -55,12 +57,15 @@ public class ParkingService {
                     double parkingLatitude = getDoubleValue(fieldsNode, "ylat");
                     double parkingLongitude = getDoubleValue(fieldsNode, "xlong");
 
-                    // Calcul de la distance entre les coordonnées actuelles et celles du parking
+                    // Calcul de la distance entre les coordonnées de l'utilisateur et celles du
+                    // parking
                     double distance = calculateDistance(userLatitude, userLongitude, parkingLatitude, parkingLongitude);
 
                     String parkingName = getTextValue(fieldsNode, "nom_du_par");
                     String id = getTextValue(fieldsNode, "id");
                     int availableSpaces = getIntValue(fieldsNode, "nb_places");
+
+                    // Création d'un objet Parking avec les informations récupérées
                     Parking parking = new Parking(id, parkingName, availableSpaces, availableSpaces, distance);
                     parkingList.add(parking);
                 }
@@ -70,6 +75,8 @@ public class ParkingService {
         return parkingList;
     }
 
+    // Méthode pour mettre à jour la disponibilité des parkings en utilisant les
+    // données en temps réel
     private void updateParkingAvailability(List<Parking> parkingList, String availabilityJson)
             throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -83,9 +90,13 @@ public class ParkingService {
                 int availableSpaces = getIntValue(fieldsNode, "places");
                 int capacity = getIntValue(fieldsNode, "capacite");
 
+                // si le parking n'a pas de disponibilité, il est ignoré
                 if (availableSpaces < 1) {
                     continue;
                 }
+
+                // Recherche du parking correspondant dans la liste et mise à jour de sa
+                // disponibilité
                 for (Parking parking : parkingList) {
                     if (parking.getName().equals(parkingName)) {
                         parking.setAvailableSpaces(availableSpaces);
@@ -118,6 +129,8 @@ public class ParkingService {
         return 0;
     }
 
+    // Méthode pour calculer la distance entre deux coordonnées géographiques en
+    // utilisant la formule de la distance haversine
     private double calculateDistance(double userLat, double userLong, double parkingLat, double parkingLong) {
         double latDistance = Math.toRadians(parkingLat - userLat);
         double lonDistance = Math.toRadians(parkingLong - userLong);
@@ -134,6 +147,8 @@ public class ParkingService {
         return distance;
     }
 
+    // Méthode pour filtrer la liste des parkings et ne conserver que ceux qui sont
+    // à proximité de l'utilisateur
     private void showOnlyNearbyParkings(List<Parking> parkingList) {
         parkingList.removeIf(p -> p.getDistanceToUser() > MAX_DISTANCE);
     }
